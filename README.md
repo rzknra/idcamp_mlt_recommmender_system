@@ -67,10 +67,7 @@ Pada tahap ini, dilakukan pengecekan terhadap:
 5. *Outlier* (data yang menyimpang dari rata-rata sekumpulan data yang ada).
 
 Hasil *Data Assesing* yang sudah dilakukan, sebagai berikut:
-1. Berdasarkan pengecekan deskripsi statistik, diperoleh bahwa fitur 'average_rating', 'ratings_count', 'num_of_pages' dan 'text_reviews_count' mempunyai nilai minimum 0. Lebih lanjut, diperhatikan bahwa:
-   - Nilai minimum fitur 'average_rating' dan 'ratings_count' adalah 0, yang berarti terdapat buku yang tidak dinilai maupun di-review oleh pengguna goodreads.
-   - Nilai minimum fitur 'num_of_pages' adalah 0, yang berarti ada buku tanpa halaman.
-   - Nilai minimum fitur 'text_reviews_count' adalah 0, yang berarti ada buku tanpa review (berupa teks) yang diberikan oleh pengguna goodreads.
+1. Berdasarkan pengecekan deskripsi statistik, diperoleh bahwa fitur 'average_rating', 'ratings_count', 'num_of_pages' dan 'text_reviews_count' mempunyai nilai minimum 0. 
 2. Berdasarkan pengecekan *unique value* fitur kategori, diperoleh jumlah *unique value* dari setiap fitur kategori, yaitu:
    - Fitur 'title' mempunyai 10214 *unique value*.
    - Fitur 'authors' mempunyai 6548 *unique value*.
@@ -89,10 +86,10 @@ Berdasarkan hasil dari *Data Assesing*, maka selanjutnya dilakukan *Data Cleanin
 4. Penggunaan *z-score* untuk mengatasi *outlier*. Seriap *record* dihitung nilai *z-score*-nya dengan menggunakan rumusan berikut.
 $$z = \frac{x - \mu}{\sigma}$$
 dengan:
-  - $z$ = nilai data yang dihitung z-score-nya.
-  - $x$ = nilai data.
-  - $\mu$ = nilai rata-rata
-  - $\sigma$ = standar deviasi.
+    - $z$ = nilai data yang dihitung z-score-nya.
+    - $x$ = nilai data.
+    - $\mu$ = nilai rata-rata
+    - $\sigma$ = standar deviasi.
 Lebih lanjut, digunakan threshold z-score sebesar 3, yang berarti data dengan nilai z-score lebih dari 3 diasumsikan sebagai outlier sehingga perlu dihilangkan dari dataset.
 
 Hasil akhir dari data cleaning menghasilkan dataset baru yang terdiri dari 9902 *record* dan 7 fitur. *Dataset* inilah yang akan digunakan dalam tahap selanjutnya. 
@@ -143,7 +140,116 @@ Berdasarkan Gambar 1b di atas, diperoleh bahwa:
 3. Nilai 'ratings_count' sebagian besar berada pada rentang 0-50.000. Di lain hal, nilai 'text_reviews_count' sebagian besar berada pada rentang 0-1000.
 
 ### Data Preparation
+## Data Preparation 
+*Data preparation* dilakukan untuk mentransformasi data sehingga menjadi bentuk yang cocok dalam proses pemodelan. Pada bagian ini, dilakukan dua persiapan data, yaitu:
+1. *Data preparation* untuk membangun sistem rekomendasi dengan teknik cosine similarity, berupa:
+    - Representasi Fitur
+      Sistem rekomendasi dengan teknik cosine similarity yang dikembangkan akan menggunakan fitur 'language_code' dan 'only_author' sebagai filternya. Oleh karena itu, kedua fitur tersebut direpresentasikan menjadi vektor tf-idf. Vektor tersebut selanjutnya dibentuk menjadi matriks sehingga bisa diproses dengan baik oleh model cosine similarity. 
+
+3. *Data preparation* untuk membangun sistem rekomendasi dengan algoritma KNN, meliputi:
+    - Reduksi Fitur.
+    Fitur yang tidak digunakan untuk membangun sistem rekomendasi dengan algoritma KNN, yaitu 'language_code' dan 'only_author' dihilangkan dari dataset sehingga dihasilkan dataset baru tanpa kedua fitur tersebut.
+    - Scaling Fitur Numerik.
+      Scaling atau penyekelaan ialah proses mengubah data sehingga mempunyai nilai dalam rentang tertentu. Untuk fitur numerik, salah satu teknik yang umum untuk digunakan yaitu MinMaxScaler dari library Scikitlearn. MinMaxScaler mentransformasi data sehingga nilainya berada dalam rentang 0 hingga 1. MinMaxScaler melakukan proses penyekalaan fitur dengan mengurangkan nilai minimal fitur (min) kemudian membaginya dengan selisih dari nilai minimal fitur (min) dan nilai maksimal fitur(max), yaitu
+$$x_{scaled} = \frac{x - min}{max - min},$$
+dengan:
+    - $x_{scaled}$ = hasil scaling data.
+    - $x$ = nilai data pada fitur yang di scaling.
+    - $min$ = nilai minimal fitur.
+    - $max$ = nilai maksimal fitur.
+
 
 ## Modeling
-## Evaluation
+Pada tahap ini dikembangkan model sistem rekomendasi, yaitu model cosine similarity dan KNN. Kedua model tersebut bisa membantu mengukur kemiripan antar data. Penjelasan lebih lanjut tentang kedua model tersebut diberikan sebagai berikut. 
+1. Cosine Similarity
+   Cosine similarity mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Hal tersebut dilakukan dengan menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, maka semakin besar nilai cosine similarity. Berikut ini diberika rumusan cosine similarity.
+$$cos(\theta) = Cos(\theta) = \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{\left\| \overrightarrow{a} \right\| \left\| \overrightarrow{b} \right\|}$$
 
+dengan:    
+    - $cos(\theta)$ = nilai cosinus vektor $\overrightarrow{a}$ dan vektor $\overrightarrow{b}$.
+    - \overrightarrow{a} \cdot \overrightarrow{b} = nilai *dot product* dari vektor $\overrightarrow{a}$ dan vektor $\overrightarrow{b}$.
+    - $\left\| \overrightarrow{a} \right\|$ = norma euclidean dari vektor $\overrightarrow{a}$.
+    - $\left\| \overrightarrow{b} \right\|$ = norma euclidean dari vektor $\overrightarrow{b}$.
+
+Model cosine similarity dikembangkan dengan dua filter, yaitu 'language_code' dan 'only_author'. Model cosine similarity dengan filter 'language_code' diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse' yang berbahasa prancis. Diperoleh hasil rekomendasi berikut:
+
+Tabel 1a. Hasil Rekomendasi Model Cosine Similarity (dengan Filter 'language_code')
+
+|    | title                              | language_code   |
+|----|------------------------------------|-----------------|
+|  0 | Bright Lights  Big City            | fre             |
+|  1 | La Petite Fille du Lac             | fre             |
+|  2 | L'Épée de Darwin                   | fre             |
+|  3 | Les Fils des ténèbres              | fre             |
+|  4 | Da Vinci Code (Robert Langdon  #2) | fre             |
+
+Terlihat bahwa model yang dibuat berhasil memberikan rekomendasi 5 judul buku lainnya yang juga berbahasa prancis.
+
+Selanjutnya, model cosine similarity dengan filter 'only_author' diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'The Passion' karya penulis Jeanette Winterson. Diperoleh hasil rekomendasi berikut:
+
+Tabel 1b. Hasil Rekomendasi Model Cosine Similarity (dengan Filter 'only_author')
+
+|    | title                                         | only_author        |
+|----|-----------------------------------------------|--------------------|
+|  0 | Art and Lies                                  | Jeanette Winterson |
+|  1 | Sexing the Cherry                             | Jeanette Winterson |
+|  2 | Art Objects: Essays on Ecstasy and Effrontery | Jeanette Winterson |
+|  3 | Lighthousekeeping                             | Jeanette Winterson |
+|  4 | Written on the Body                           | Jeanette Winterson |
+
+Terlihat bahwa model yang dibuat berhasil memberikan rekomendasi 5 judul buku lainnya yang juga ditulis oleh Jeanette Winterson.
+
+3. KNN
+
+K-Nearest Neighbors (KNN) merupakan algoritma pengelompokan yang sederhana. Algoritma KNN merupakan algoritma pengelompokan yang bekerja dengan mengambil sejumlah K data terdekat (tetangganya) sebagai acuan untuk menentukan kelompok dari data baru. Algoritma ini mengelompokan data berdasarkan similarity atau kemiripan atau kedekatannya terhadap data lainnya. Pada proyek ini, metrik pengukur kemiripan data yang digunakan yaitu *euclidean distance* dengan rumusan sebagai berikut. 
+$$euc(a,b) = \sqrt{\sum_{i=1}^{k}(a_i-b_i)^2}$$
+
+dengan:
+- $a_i$ = nilai fitur ke-$i$ dari data $a$.
+- $b_i$ = nilai fitur ke-$i$ dari data $b$.
+
+Model KNN yang dikembangkan diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse'. Diperoleh hasil rekomendasi berikut:
+
+Tabel 3. Hasil Rekomendasi Tabel KNN
+
+|    | Book Title                                         | Similiarity Score   |
+|----|----------------------------------------------------|---------------------|
+|  0 | Philosophy: The Classics                           | 100.0%              |
+|  1 | The Odes                                           | 100.0%              |
+|  2 | Pyramids of Montauk: Explorations in Consciousness | 100.0%              |
+|  3 | Buddhism: A Concise Introduction                   | 99.99%              |
+|  4 | Sliding Scales (Pip & Flinx #10)                   | 99.99%              |
+
+Model KNN yang dibuat berhasil memberikan rekomendasi 5 judul buku yang serup dengan buku 'The Untouchables' dengan tingkat kemiripan 99.9%-100%.
+
+## Evaluation
+Model rekomendasi yang sudah dibangun dievaluasi menggunakan metrik berikut:
+1. Precision.
+   Model Content Based-Filtering dengan teknik Cosine Similarity dievaluasi menggunakan metrik precision (presisi). Untuk sistem rekomendasi, rumusan metrik presisi diberikan sebagai berikut.
+$$ Precision = \frac{Rel}{Rec} \times 100\%, $$
+dengan:
+- $Rel$ = banyak item hasil rekomendasi yang relevan.
+- $Rec$ = banyak item hasil rekomendasi.
+  
+Berdasarkan uji coba Model Content Based-Filtering menggunakan teknik Cosine Similarity di atas, diperoleh bahwa $\frac{5}{5}$ hasil rekomendasi mempunyai kode bahasa atau penulis yang serupa dengan buku yang digunakan oleh pengguna. Oleh karena itu, diperoleh Model Content Based-Filtering menggunakan teknik Cosine Similarity mempunyai presisi sebesar $\frac{5}{5} \times 100 \% = 100\%$.
+
+2. Davies-Bouldin Score.
+Model Collaborative Filtering menggunakan algoritma KNN dievaluasi menggunakan metrik Davies-Bouldin Score, yaitu metrik evaluasi yang digunakan untuk mengukur kualitas pengelompokan dalam analisis klaster. Skor ini mengukur seberapa baik sebuah klaster dipisahkan satu sama lain dan seberapa serupa objek dalam klaster yang sama. Semakin rendah nilai Davies-Bouldin Score, semakin baik separasi tiap kluster yang dihasilkan model. Metrik ini mempunyai rumusan sebagai berikut.
+$$DB = \frac{1}{k}\sum_{i=1}^{k}max(\frac{\Delta(x_i)+\Delta(x_j)}{\delta(x_i,x_j)}),$$
+dengan:
+- $\Delta(x_i)$ = jarak rata-rata setiap titik data pada kluster $i$ dengan centroid kluster $i$.
+- $\Delta(x_j)$ = jarak rata-rata setiap titik data pada kluster $i$ dengan centroid kluster $j$.
+- $\delta(x_i,x_j)$ = jarak centroid kluster $i$ dan centroid kluster $j$.
+
+Kode berikut ini digunakan untuk menghitung Davies-Bouldin Score.
+```
+db_score = davies_bouldin_score(book_cf, book_title)
+print(db_score)
+```
+Kode tersebut menghasilkan Davies-Bouldin Score sebesar 3.8725434409129003. Skor tersebut cukup kecil. Hal ini mengindikasikan bahwa separasi tiap kluster yang dihasilkan model cukup baik. Dengan separasi tiap kulster yang cukup baik, maka model mampu memberikan hasil rekomendasi yang cukup baik. Hal ini terlihat pada uji coba model KNN untuk memberikan 5 rekomendasi buku yang mirip dengan buku 'The Untouchables', diperoleh tingkat kemiripan buku 'The Untouchables' dengan buku-buku yang direkomendasikan sebesar 99,9%-100%.  
+
+Dengan demikian, telah berhasil dilakukan evaluasi terhadap model rekomendasi yang sudah dibuat. 
+
+## Referensi
+
+ 

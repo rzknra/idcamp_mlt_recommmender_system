@@ -14,17 +14,17 @@ Pengembangan sistem rekomendasi buku bertujuan untuk memberikan manfaat kepada p
 ### Problem Statements
 - Bagaimana cara mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN?
 - Bagaimana cara mengidentifikasi karakteristik *dataset*?
-- Bagaimana cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN?
+- Bagaimana cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN sehingga diperoleh model dengan performa terbaik?
   
 ### Goals
 - Mengetahui cara mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN.
 - Mengetahui cara mengidentifikasi karakteristik *dataset*.
-- Mengetahui cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN.
+- Mengetahui cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN sehingga diperoleh model dengan performa terbaik.
 
 ### Solution Statements
-- Untuk mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, dilakukan *Data Wragling* dan *Data Preparation*. *Data Wragling* yang dilakukan berupa *Data Assesing* dan *Data Cleaning*. *Data Preparation* yang dilakukan untuk mengembangkan sistem rekomendasi dengan teknik Cosine Similarity berupa representasi fitur. Di sisi lain, *Data Preparation* yang dilakukan untuk mengembangkan sistem rekomendasi dengan algoritma KNN yaitu reduksi fitur, dan *Scaling* fitur numerik.
-- Untuk mengidentifikasi karakteristik dari *dataset*, dilakukan analisis univariat, baik terhadap fitur kategori maupun fitur numerik. Analsis univariat terhadap fitur kategori dilakukan menggunakan *bra plot* dan *wordclod*. Di sisi lain, analisis univariat terhadap fitur numerik dilakukan menggunakan *histogram plot*.
-- Untuk mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity digunakan metrik *precision*. Di sisi lain, untuk mengevaluasi performa sedangkan performa sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, digunakan metrik *Davies Bouldien Score*.
+- Untuk mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, dilakukan *Data Assesing* dan *Data Preparation*. *Data Preparation* yang dilakukan meliputi *Data Cleaning*, representasi fitur, reduksi fitur, dan *Scaling* fitur numerik.
+- Untuk mengidentifikasi karakteristik dari *dataset*, dilakukan analisis univariat, baik terhadap fitur kategori maupun fitur numerik. Analsis univariat terhadap fitur kategori dilakukan menggunakan *bar plot* dan *wordclod*. Di sisi lain, analisis univariat terhadap fitur numerik dilakukan menggunakan *histogram plot*.
+- Untuk mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity digunakan metrik *precision*. Di sisi lain, untuk mengevaluasi performa sedangkan performa sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, digunakan metrik *Davies Bouldien Score*. Lebih lanjut, dibandingkan interpretasi hasil metrik evaluasi kedua model sehingga diperoleh model dengan performa terbaik. 
 
 
 ## Data Understanding
@@ -65,7 +65,7 @@ Lebih lanjut:
 1. Fitur 'title', 'authors', dan 'language_code' digunakan untuk mengembangkan sistem rekomendasi dengan teknik cosine similarity.
 2. Fitur 'title', 'average rating', 'num_of_pages',  'ratings_count', dan    'text_reviews_count' digunakan untuk mengembangkan sistem rekomendasi dengan algoritma KNN.
    
-### Data Assesing dan Data Cleaning
+### Data Assesing 
 Pada tahap *Data Assesing*, dilakukan pengecekan terhadap:
 1. Deskripsi statistik fitur numerik.
 2. *Unique value* fitur kategori.
@@ -87,21 +87,6 @@ Hasil *Data Assesing* yang sudah dilakukan, sebagai berikut:
 4. Terdapat 685 buku dengan 'title' dan 'author' yang sama. 
 5. Tidak ada *missing value*.
 6. Fitur 'average_rating','num_of_pages','ratings_count', dan 'text_reviews_count' mempunyai 'outlier'.
-
-Berdasarkan hasil dari *Data Assesing*, maka kemudian dilakukan *Data Cleaning* atau yang meliputi:
-1. Penghapusan *record* dengan 'average_rating', 'ratings_count', dan 'num_of_pages' bernilai nol karena mempengaruhi performa model. Lebih lanjut, *record* dengan 'text_reviews_count' bernilai 0 tidak dihilangkan karena memungkinkan bagi pengguna untuk memberikan penilaian rating tanpa memberi ulasan teks.
-2. Pembuatan fitur baru 'only_author' yang hanya memuat nama penulis saja dan penhapusan fitur 'authors' dihapuskan dari dataset.
-3. Penghapusan 685 *record* yang terduplikat.
-4. Penggunaan *z-score* untuk mengatasi *outlier*. Setiap data dihitung nilai *z-score*-nya dengan menggunakan rumusan berikut.
-$$z = \frac{x - \mu}{\sigma}$$
-dengan:
-    - $z$ = nilai data yang dihitung z-score-nya.
-    - $x$ = nilai data.
-    - $\mu$ = nilai rata-rata
-    - $\sigma$ = standar deviasi.
-Lebih lanjut, digunakan threshold z-score sebesar 3, yang berarti data dengan nilai z-score lebih dari 3 diasumsikan sebagai outlier sehingga perlu dihilangkan dari dataset.
-
-Hasil akhir dari data cleaning menghasilkan dataset baru yang terdiri dari 9902 *record* (pengamatan) dan 7 fitur. *Dataset* inilah yang akan digunakan dalam tahap selanjutnya. 
 
 ### Analisis Univariat 
 Data yang sudah dibersihkan digunakan untuk analisis univariat. Analisis univariat dilakukan untuk mengetahui karakterisitik dari setiap fitur. 
@@ -180,12 +165,28 @@ Berdasarkan Gambar 1b di atas, diperoleh bahwa:
 3. Nilai 'ratings_count' sebagian besar berada pada rentang 0-50.000. Di lain hal, nilai 'text_reviews_count' sebagian besar berada pada rentang 0-1000.
 
 ## Data Preparation 
-*Data preparation* dilakukan untuk mentransformasi data sehingga menjadi bentuk yang cocok dalam proses pemodelan. Pada bagian ini, dilakukan dua *data preparation*, yaitu:
-1. *Data preparation* untuk membangun sistem rekomendasi Content-Based Filtering menggunakan dengan teknik Cosine Similarity, berupa:
+*Data preparation* dilakukan untuk mentransformasi data sehingga menjadi bentuk yang cocok dalam proses pemodelan. Pada bagian ini, dilakukan tiga tahap *data preparation*, yaitu:
+
+1. *Data Cleaning*
+   
+Berdasarkan hasil dari *Data Assesing*, maka kemudian dilakukan *Data Cleaning* atau yang meliputi:
+  - Penghapusan *record* dengan 'average_rating', 'ratings_count', dan 'num_of_pages' bernilai nol karena mempengaruhi performa model. Lebih lanjut, *record* dengan 'text_reviews_count' bernilai 0 tidak dihilangkan karena memungkinkan bagi pengguna untuk memberikan penilaian rating tanpa memberi ulasan teks.
+  - Pembuatan fitur baru 'only_author' yang hanya memuat nama penulis saja dan penhapusan fitur 'authors' dihapuskan dari dataset.
+  - Penghapusan 685 *record* yang terduplikat.
+  - Penggunaan *z-score* untuk mengatasi *outlier*. Setiap data dihitung nilai *z-score*-nya dengan menggunakan rumusan berikut.
+  $$z = \frac{x - \mu}{\sigma}$$
+dengan:
+    - $z$ = nilai data yang dihitung z-score-nya.
+    - $x$ = nilai data.
+    - $\mu$ = nilai rata-rata
+    - $\sigma$ = standar deviasi.
+Lebih lanjut, digunakan threshold z-score sebesar 3, yang berarti data dengan nilai z-score lebih dari 3 diasumsikan sebagai outlier sehingga perlu dihilangkan dari dataset. Hasil akhir dari data cleaning menghasilkan dataset baru yang terdiri dari 9902 *record* (pengamatan) dan 7 fitur. *Dataset* inilah yang akan digunakan dalam tahap selanjutnya.
+
+2. *Data preparation* untuk membangun sistem rekomendasi Content-Based Filtering menggunakan dengan teknik Cosine Similarity, berupa:
     - Representasi Fitur.
 Sistem rekomendasi Content-Based Filtering menggunakan dengan teknik Cosine Similarity akan dibangun menggunakan fitur 'language_code' dan 'only_author' sebagai filternya. Oleh karena itu, kedua fitur tersebut direpresentasikan menjadi vektor tf-idf. Vektor tersebut selanjutnya dibentuk menjadi matriks sehingga bisa diproses dengan baik oleh model cosine similarity. 
 
-2. *Data preparation* untuk membangun sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, meliputi:
+3. *Data preparation* untuk membangun sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, meliputi:
     - Reduksi Fitur.
 Fitur yang tidak digunakan untuk membangun sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, yaitu 'language_code' dan 'only_author' dihilangkan dari dataset sehingga dihasilkan dataset baru tanpa kedua fitur tersebut.
     - Scaling Fitur Numerik.
@@ -275,7 +276,9 @@ Kelebihan dan kekurangan algoritma KNN, diberikan sebagai berikut:
     - Performa algoritma dapat menurun jika jumlah fitur (dimensi) data sangat besar.
     - KNN tidak dapat menangani data kategori yang hilang atau data yang tidak lengkap.
     
-Model Collabprative Filtering menggunakan algoritma KNN yang dikembangkan diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse'. Diperoleh hasil rekomendasi berikut:
+Model Collaborative Filtering menggunakan algoritma KNN yang dikembangkan menggunakan nilai parameter K=6, yang berarti model akan memberikan 6 buku rekomenadasi yang mirip dengan buku yang ingin dicari rekomendasinya oleh pengguna. Salah satu dari judul buku hasil rekomendasi model tersebut nenpunyai judul yang sama dengan buku yang ingin dicari rekomendasinya oleh pengguna. Akibatnya, dari sini terhitung bahwa model sebanarnya hanya memberikan rekomendasi 5 buku yang relevan. Buku yang mempunyai judul yang sama dengan buku yang ingin dicari pengguna tersebut bisa diabaikan dan tidak dijadikan keluaran model.  
+
+Telah dilakukan uji coba Model Collaborative Filtering menggunakan algoritma KNN tersebut dengan hasil rekomendasi berikut:
 
 Tabel 3. Hasil Rekomendasi Model Collaborative Filtering menggunakan Algoritma KNN.
 
@@ -322,7 +325,10 @@ print(db_score)
 ```
 Kode tersebut menghasilkan *output* *Davies-Bouldin Score* sebesar 3.8725434409129003. Skor tersebut cukup kecil. Hal ini mengindikasikan bahwa separasi tiap kluster yang dihasilkan model cukup baik. Dengan separasi tiap kulster yang cukup baik, maka model mampu memberikan hasil rekomendasi yang cukup baik. Hal ini terlihat pada uji coba model KNN untuk memberikan 5 rekomendasi buku yang mirip dengan buku 'The Untouchables', diperoleh tingkat kemiripan buku 'The Untouchables' dengan buku-buku yang direkomendasikan sebesar 99,9%-100%.  
 
-Dengan demikian, telah berhasil dilakukan evaluasi performa model rekomendasi yang sudah dibuat. 
+Dengan demikian, berdasarkan hasil evaluasi tersebut, diperoleh bahwa:
+1. Model Content Based-Filtering dengan teknik Cosine Similarity menpunyai presisi 100%, yang berarti model tersebut mampu memberikan hasil rekomenadasi buku yang baik atau relevan.
+2. Model Collaborative Filtering menggunakan algoritma KNN mempunyai *Davies-Bouldin Score* sebesar 3.8725434409129003, yang berarti mampu memberikan hasil rekomenadasi buku yang cukup baik atau relevan.
+Oleh karena itu, model Content Based-Filtering dengan teknik Cosine Similarity menjadi model dengan performa terbaik untuk memberi rekomendasi buku yang relevan. 
 
 ## Referensi
 [1] Ardiansyah, R., Bianto, M. A., & Saputra, B. D. (2023). Sistem Rekomendasi Buku Perpustakaan Sekolah menggunakan Metode Content-Based Filtering. Jurnal CoSciTech (Computer Science and Information Technology), 4(2), 510-518.

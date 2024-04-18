@@ -215,9 +215,17 @@ dengan:
   - $|| \overrightarrow{a} ||$ = norma euclidean dari vektor $\overrightarrow{a}$.
   - $|| \overrightarrow{b} ||$ = norma euclidean dari vektor $\overrightarrow{b}$.
 
-Model Content-Based Filtering menggunakan teknik Cosine Similarity dikembangkan dengan dua filter, yaitu 'language_code' dan 'only_author'. 
+Kelebihan dan kekurangan teknik cosine similarity diberikan sebagai berikut.
+1. Kelebihan.
+    - Berlaku untuk Berbagai Bentuk Data: Metode ini dapat digunakan untuk mengukur kesamaan dalam berbagai bentuk data, termasuk teks, gambar, dan suara.
+    - Implementasi Mudah: Perhitungan cosine similarity relatif mudah diimplementasikan menggunakan perangkat lunak komputer1.
+    - Relevansi Pencarian: Dalam pengolahan data dan mesin pencarian, cosine similarity membantu menemukan dokumen-dokumen yang paling relevan dengan query yang dimasukkan1.
+2. Kekurangan.
+    - Tidak Memperhatikan Urutan: Cosine similarity hanya memperhatikan sudut kosinus antara dua vektor, sehingga tidak memperhitungkan urutan kata atau elemen dalam dokumen.
+    - Sensitif terhadap Frekuensi: Metode ini dapat sensitif terhadap frekuensi kata dalam dokumen. Jika suatu kata muncul lebih sering, maka akan mempengaruhi nilai cosine similarity3.
+    - Tidak Memperhitungkan Makna: Meskipun mengukur kesamaan secara matematis, cosine similarity tidak memperhitungkan makna kata atau konteks4.
 
-Model Content-Based Filtering menggunakan teknik Cosine Similarity (dengan filter 'language_code') diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse' yang berbahasa prancis. Diperoleh hasil rekomendasi berikut:
+Model Content-Based Filtering menggunakan teknik Cosine Similarity dikembangkan dengan dua filter, yaitu 'language_code' dan 'only_author'. Model Content-Based Filtering menggunakan teknik Cosine Similarity (dengan filter 'language_code') diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse' yang berbahasa prancis. Diperoleh hasil rekomendasi berikut:
 
 Tabel 1a. Model Content-Based Filtering menggunakan Teknik Cosine Similarity (dengan Filter 'language_code').
 
@@ -254,9 +262,22 @@ dengan:
 - $a_i$ = nilai fitur ke-i dari data $a$.
 - $b_i$ = nilai fitur ke-i dari data $b$.
 
+Kelebihan dan kekurangan algoritma KNN, diberikan sebagai berikut:
+1. Kelebihan.
+    - Mudah diimplementasikan dan dipahami.
+    - Tidak memerlukan proses pelatihan yang kompleks.
+    - Cocok untuk dataset yang relatif kecil.
+    - KNN merupakan algoritma non-parametrik, yang berarti tidak membuat asumsi tertentu tentang distribusi data.
+2. Kekurangan.
+    - Sangat sensitif terhadap data pencilan (outliers).
+    - Memerlukan penyimpanan data yang besar karena harus menyimpan seluruh dataset.
+    - Memerlukan waktu komputasi yang tinggi untuk menghitung jarak antara setiap titik data.
+    - Performa algoritma dapat menurun jika jumlah fitur (dimensi) data sangat besar.
+    - KNN tidak dapat menangani data kategori yang hilang atau data yang tidak lengkap.
+    
 Model Collabprative Filtering menggunakan algoritma KNN yang dikembangkan diuji cobakan untuk memberi rekomendasi buku yang mirip dengan buku 'La Place de la Concorde Suisse'. Diperoleh hasil rekomendasi berikut:
 
-Tabel 3. Hasil Rekomendasi Model Collabprative Filtering menggunakan Algoritma KNN.
+Tabel 3. Hasil Rekomendasi Model Collaborative Filtering menggunakan Algoritma KNN.
 
 |    | Book Title                                         | Similiarity Score   |
 |----|----------------------------------------------------|---------------------|

@@ -13,17 +13,17 @@ Pengembangan sistem rekomendasi buku bertujuan untuk memberikan manfaat kepada p
 
 ### Problem Statements
 - Bagaimana cara mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN?
-- Bagaimana cara mengetahui karakteristik *dataset*?
+- Bagaimana cara mengidentifikasi karakteristik *dataset*?
 - Bagaimana cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN?
   
 ### Goals
 - Mengetahui cara mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN.
-- Mengetahui cara mengetahui karakteristik *dataset*.
+- Mengetahui cara mengidentifikasi karakteristik *dataset*.
 - Mengetahui cara mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN.
 
 ### Solution Statements
 - Untuk mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, dilakukan *Data Wragling* dan *Data Preparation*. *Data Wragling* yang dilakukan berupa *Data Assesing* dan *Data Cleaning*. *Data Preparation* yang dilakukan untuk mengembangkan sistem rekomendasi dengan teknik Cosine Similarity berupa representasi fitur. Di sisi lain, *Data Preparation* yang dilakukan untuk mengembangkan sistem rekomendasi dengan algoritma KNN yaitu reduksi fitur, dan *Scaling* fitur numerik.
-- Untuk mengetahui karakteristik dari data, dilakukan analisis univariat, baik terhadap fitur kategori maupun fitur numerik. Analsis univariat terhadap fitur kategori dilakukan menggunakan *bra plot* dan *wordclod*. Di sisi lain, analisis univariat terhadap fitur numerik dilakukan menggunakan *histogram plot*.
+- Untuk mengidentifikasi karakteristik dari *dataset*, dilakukan analisis univariat, baik terhadap fitur kategori maupun fitur numerik. Analsis univariat terhadap fitur kategori dilakukan menggunakan *bra plot* dan *wordclod*. Di sisi lain, analisis univariat terhadap fitur numerik dilakukan menggunakan *histogram plot*.
 - Untuk mengevaluasi performa sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity digunakan metrik *precision*. Di sisi lain, untuk mengevaluasi performa sedangkan performa sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN, digunakan metrik *Davies Bouldien Score*.
 
 

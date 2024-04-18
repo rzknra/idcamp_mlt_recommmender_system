@@ -1,9 +1,15 @@
 # Laporan Proyek Machine Learning - Sistem Rekomendasi Buku
 
 ## Domain Proyek 
+Goodreads adalah situs web sosial berbasis buku milik Amazon bagi anggota untuk berbagi buku, membaca, meninjau buku, menilai buku, dan terhubung dengan pembaca lain [[4](https://asistdl.onlinelibrary.wiley.com/doi/abs/10.1002/asi.23733)]. Sebanyak puluhan juta ulasan buku tersedia di Goodreads. Informasi berupa judul buku, kode bahasa, nama penulis, nilai rata-rata rating, banyak rating, banyak ulasan teks, dan jumlah halaman buku bisa digunakan pengguna untuk untuk memilih buku yang relevan. Namun, tersedianya pilihan jutaan buku di Goodreads, kadan menyulitkan pengguna untuk memilih buku yang relevan. 
 
-## Bisnis Understanding
-Pengembangan sistem rekomendasi bertujuan untuk memberikan manfaat kepada pengguna GoodReads, salah satu manfaat tersebut yaitu untuk membantu pengguna GoodReads mendapatkan rekomendasi buku.
+Sistem rekomendasi dapat membantu pengguna Goodreads untuk mendapatkan rekomendasi buku yang relevan. Sistem rekomendasi merupakan sistem yang bertujuan untuk memberikan rekomendasi produk atau layanan online yang dipersonalisasi kepada pengguna untuk menangani masalah kelebihan informasi online yang meningkat [[3](https://www.sciencedirect.com/science/article/pii/S0167923615000627
+)]. Sistem rekomendasi dibagi menjadi dua, yaitu Content-Based Filtering dan Collaborative Filtering. Sistem rekomendasi Content-Based Filtering dapat dibangun menggunakan teknik Cosine Similarity [[1](https://ejurnal.umri.ac.id/index.php/coscitech/article/view/5131)]. Di sisi lain, sistem rekomendasi Collaborative Filtering dapat dibangun menggunakan algoritma K-Nearest Neighbors (KNN) [[2](https://www.mikroskil.ac.id/ejurnal/index.php/jsm/article/view/659)].
+
+Pada proyek ini, akan dibangun dua sistem rekomendasi buku. Keduanya meliputi sistem rekomendasi Content-Based Filtering menggunakan teknik Cosine Similarity, yang memanfaatkan informasi mengenai kode bahasa dan nama penulis sebagai filternya, serta sistem rekomendasi Collaborative Filtering menggunakan algoritma K-Nearest Neighbors (KNN), yang memanfaatkan informasi mengenai nilai rata-rata rating, banyak rating, banyak ulasan teks, dan jumlah halaman. 
+
+## Business Understanding
+Pengembangan sistem rekomendasi buku bertujuan untuk memberikan manfaat kepada pengguna Goodreads, salah satu manfaat tersebut yaitu untuk membantu pengguna Goodreads mendapatkan rekomendasi buku yang relevan.
 
 ### Problem Statements
 - Bagaimana cara mengolah *dataset* sehingga bisa digunakan untuk mengembangkan sistem rekomendasi Content-Based Fitering menggunakan teknik Cosine Similarity dan sistem rekomendasi Collaborative Filtering menggunakan algoritma KNN?
@@ -71,7 +77,7 @@ Hasil *Data Assesing* yang sudah dilakukan, sebagai berikut:
 1. Berdasarkan pengecekan deskripsi statistik, diperoleh bahwa fitur 'average_rating', 'ratings_count', 'num_of_pages' dan 'text_reviews_count' mempunyai nilai minimum 0, yang berarti:
    - Terdapat buku yang tidak dinilai maupun di-review oleh pengguna goodreads.
    - Terdapat buku tanpa halaman.
-   - Terdapat ada buku tanpa ulasan (berupa teks) yang diberikan oleh pengguna GoodReads.
+   - Terdapat ada buku tanpa ulasan (berupa teks) yang diberikan oleh pengguna Goodreads.
 3. Berdasarkan pengecekan *unique value* fitur kategori, diperoleh bahwa:
    - Fitur 'title' mempunyai 10214 *unique value*.
    - Fitur 'authors' mempunyai 6548 *unique value*.
@@ -133,11 +139,11 @@ Berdasarkan Gambar 1c di atas, diperoleh bahwa:
 1. Buku 'Chemistry: The Central Science' menjadi buku dengan jumlah halaman terbanyak.
 2. Top 10 buku dengan jumlah halaman terbanyak mempunyai jumlah halaman yang tidak jauh berbeda, yang masing-masing nilainya berkisar antara 1024-1046 halaman.
 
-Selanjutnya, diperhatikan Gambar 1d berikut ini yang menyajikan top 10 penulis dengan Total buku terbanyak yang ada di GoodReads.
+Selanjutnya, diperhatikan Gambar 1d berikut ini yang menyajikan top 10 penulis dengan Total buku terbanyak yang ada di Goodreads.
 
 ![1d](https://github.com/rzknra/idcamp_mlt_recommmender_system/assets/94267677/e0f43285-b3fa-447e-ab8e-a6d0f878727b)
 
-Gambar 1d. Top 10 Penulis dengan Total Buku Terbanyak yang Ada di GoodReads.
+Gambar 1d. Top 10 Penulis dengan Total Buku Terbanyak yang Ada di Goodreads.
 
 Berdasarkan Gambar 1d di atas, diperoleh bahwa:
 1. Stephen King menjadi penulis dengan total buku terbanyak, yaitu 58 buku.
@@ -298,5 +304,13 @@ Kode tersebut menghasilkan *output* *Davies-Bouldin Score* sebesar 3.87254344091
 Dengan demikian, telah berhasil dilakukan evaluasi performa model rekomendasi yang sudah dibuat. 
 
 ## Referensi
+[1] Ardiansyah, R., Bianto, M. A., & Saputra, B. D. (2023). Sistem Rekomendasi Buku Perpustakaan Sekolah menggunakan Metode Content-Based Filtering. Jurnal CoSciTech (Computer Science and Information Technology), 4(2), 510-518.
+
+[2] Gohzali, H., Megawan, S., Erwin, E., & Onggo, J. (2019). Rekomendasi Buku Menggunakan K-Nearest Neighbor (KNN) dan Binary Particle Swarm Optimization (BPSO). Jurnal SIFO Mikroskil, 20(1), 81-92.
+
+[3] Lu, J., Wu, D., Mao, M., Wang, W., & Zhang, G. (2015). Recommender system application developments: a survey. Decision support systems, 74, 12-32.
+
+[4] Thelwall, M., & Kousha, K. (2017). Goodreads: A social network site for book readers. Journal of the Association for Information Science and Technology, 68(4), 972-983.
+
 
  
